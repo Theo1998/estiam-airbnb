@@ -1,0 +1,44 @@
+extends layout
+
+block content
+
+  // Section carte des annonces
+  section.details-card
+    .container
+      .row
+        .col-md-4
+        each place in places
+          .card-content
+            .card-img
+              img(src='https://placeimg.com/380/230/arch' alt='')
+              span
+                h4=place.price_by_night
+                
+            .card-desc
+              h3= place.name
+              p= place.description
+              a.btn.btn-primary(href=`/api/place/${place.id}` role='button') Afficher
+  
+      //Section marketing / inscription     
+      .container-narrow
+        .masthead
+          br
+          br
+          h3.muted Trouvez le logement qu'il vous faut, quand il faut.
+        hr
+        .jumbotron
+          h1 Une inscription suffit. 
+          p.lead
+            | L'utilisation de Lov'cation est gratuit pour les particuliers. 
+          a.btn.btn-large.btn-success(href='#') Je m'inscris
+        hr
+        .row-fluid.marketing
+          .span6
+            h4 Subheading
+            p
+              | Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.
+            h4 Subheading
+        hr
+        .footer
+          p © Company 2012
+

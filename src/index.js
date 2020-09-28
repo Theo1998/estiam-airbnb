@@ -8,6 +8,7 @@ const morgan = require('morgan');
 const db = require('../config/database');
 const cityRoutes = require('./routes/city');
 const authRoutes = require('./routes/auth');
+const placeRoutes = require("./routes/place");
 
 const router = express.Router();
 
@@ -26,17 +27,22 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.set("view engine", "pug");
+app.set("views", "./views");
+
 router.get('/', (req, res) => {
   res.send('Welcome to our Airbnb API !');
 });
 
 router.use('/city', cityRoutes);
 router.use('/auth', authRoutes);
+router.use("/place", passportJWT.authenticate(), placeRoutes);
 
 router.use((req, res) => {
   res.send('<h1> Page not found </h1>');
 });
 
 app.use('/api', router);
+
 
 app.listen(port, () => console.log(`[🚧 server is running on ${port}]`));
