@@ -6,6 +6,7 @@ const path = require('path');
 const cors = require('cors');
 const morgan = require('morgan');
 const db = require('../config/database');
+const cityRoutes = require('./routes/city');
 
 const router = express.Router();
 
@@ -27,6 +28,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 router.get('/', (req, res) => {
   res.send('Welcome to our Airbnb API !');
 });
+
+router.use('/city', cityRoutes);
 
 router.use((req, res) => {
   res.send('<h1> Page not found </h1>');
