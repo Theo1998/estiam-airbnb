@@ -19,7 +19,7 @@ module.exports = () => {
   });
   passport.use(strategy);
   return {
-    intialize() {
+    initialize() {
       return passport.initialize();
     },
     authenticate() {

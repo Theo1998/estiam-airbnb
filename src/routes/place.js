@@ -1,11 +1,14 @@
 const express = require('express');
 
 const router = express.Router();
+// gestion des images
 const placeController = require('../controllers/placeController');
 
-router.get('/', placeController.index);
 router.get('/delete/:id', placeController.delete);
 router.post('/update/:id', placeController.update);
-router.post('/', placeController.store);
+router.get('/', placeController.all);
+router.get('/new', placeController.form);
+router.post('/new', placeController.store);
+router.get('/:id', placeController.show);
 
 module.exports = router;
