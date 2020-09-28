@@ -38,7 +38,7 @@ router.get('/', (req, res) => {
 
 router.use('/city', cityRoutes);
 router.use('/auth', authRoutes);
-router.use('/place', passportJWT.authenticate(), placeRoutes);
+router.use('/place', placeRoutes);
 
 router.use((req, res) => {
   res.send('<h1> Page not found </h1>');

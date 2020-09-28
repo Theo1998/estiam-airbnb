@@ -9,6 +9,8 @@ const PlaceSchema = new Schema({
   bathrooms: { type: Number },
   max_guests: { type: Number },
   price_by_night: { type: Number },
+  city: { type: Schema.Types.ObjectId, ref: 'city' },
+  host: { type: Schema.Types.ObjectId, ref: 'user' },
   createdAt: { type: Date, default: Date.now() },
 });
 

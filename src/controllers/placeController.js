@@ -1,4 +1,6 @@
+const City = require('../models/city');
 const Place = require('../models/place');
+const User = require('../models/user');
 
 // Afficher les informations d'un place
 exports.show = async (req, res, next) => {
@@ -74,9 +76,31 @@ exports.store = async (req, res, next) => {
 // Ajouter un nouveau place
 exports.store = async (req, res, next) => {
   try {
-    let place = new Place(req.body);
-    place = await place.save();
-    res.json(place);
+    City.findById({ _id: req.params.city }, (err, data) => {
+      if (err) return console.error(err);
+      let place = new Place(req.body);
+      User.findById({ _id: req.params.user }, (e, user) => {
+        if (e) return console.error(e);
+        place = place.save(
+          (error, newPlace) => {
+            if (error) return console.error(error);
+            data.places.push(newPlace);
+            user.places.push(newPlace);
+            data.save(
+              (lastErr, pl) => {
+                user.save();
+                if (lastErr) return console.error(lastErr);
+                res.json(pl);
+                return true;
+              },
+            );
+            return true;
+          },
+        );
+        return true;
+      });
+      return true;
+    });
   } catch (error) {
     next(error);
   }

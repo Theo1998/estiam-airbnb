@@ -2,10 +2,12 @@ const City = require('../models/city');
 
 exports.index = async (req, res, next) => {
   try {
-    const citys = await City.find()
+    const cities = await City.find({
+      places: [],
+    })
       .sort({ createAt: -1 });
 
-    res.send(citys);
+    res.send(cities);
   } catch (error) {
     next(error);
   }

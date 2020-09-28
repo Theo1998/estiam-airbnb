@@ -9,7 +9,7 @@ const UserSchema = new Schema({
   first_name: { type: String, required: true },
   last_name: { type: String, required: true },
   role: { type: String, required: true },
-  following: [{ type: Schema.Types.ObjectId, ref: 'user' }],
+  places: [{ type: Schema.Types.ObjectId, ref: 'place' }],
 });
 UserSchema.methods.encryptPassword = async (password) => {
   const salt = await bcrypt.genSalt(5);

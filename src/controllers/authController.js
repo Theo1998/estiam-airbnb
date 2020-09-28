@@ -53,7 +53,9 @@ exports.signup = async (req, res, next) => {
 };
 exports.me = async (req, res, next) => {
   try {
-    const user = await User.findById(req.user);
+    const user = await User.findById(req.user, {
+      places: [],
+    });
     return res.send(user);
   } catch (err) {
     next(err);

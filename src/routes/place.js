@@ -8,7 +8,7 @@ router.get('/delete/:id', placeController.delete);
 router.post('/update/:id', placeController.update);
 router.get('/', placeController.all);
 router.get('/new', placeController.form);
-router.post('/new', placeController.store);
+router.post('/new/:city/:user', placeController.store);
 router.get('/:id', placeController.show);
 
 module.exports = router;
