@@ -7,6 +7,7 @@ const cors = require('cors');
 const morgan = require('morgan');
 const db = require('../config/database');
 const cityRoutes = require('./routes/city');
+const authRoutes = require('./routes/auth');
 
 const router = express.Router();
 
@@ -30,6 +31,7 @@ router.get('/', (req, res) => {
 });
 
 router.use('/city', cityRoutes);
+router.use('/auth', authRoutes);
 
 router.use((req, res) => {
   res.send('<h1> Page not found </h1>');
