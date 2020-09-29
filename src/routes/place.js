@@ -8,6 +8,7 @@ const placeController = require('../controllers/placeController');
 
 router.get('/delete/:id', placeController.delete);
 router.post('/update/:id', placeController.update);
+router.get('/update/:id', placeController.updateView)
 router.get('/', passportJWT.authenticate(), placeController.all);
 router.get('/new', placeController.form);
 router.post('/new/:city/:user', placeController.store);

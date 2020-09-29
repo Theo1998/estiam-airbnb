@@ -6,27 +6,33 @@ block content
     form.form-horizontal(action='/api/place/new', method='POST') 
      .form-group
 
-       label.form-label(for='name') Nom
+       label.form-label(for='name') Nom 
        input#name.form-input(type='text', name='name', placeholder='Saisissez un nom')
        br
 
-       label.form-label(for='description') Description
+       label.form-label(for='description') Description 
        input#description.form-input(type='text', name='description', placeholder='Saisissez une description') 
        br
 
-       label.form-label(for='rooms') Nombre de pièces
+       label.form-label(for='city') Ville 
+       select(name='city', size='1')
+         each city in citys
+          option=city.name
+       br
+
+       label.form-label(for='rooms') Nombre de pièces 
        input#rooms.form-input(type='text', name='rooms', placeholder='Saisissez un nombre de pièce') 
        br
 
-       label.form-label(for='bathrooms') Nombre de SDB
+       label.form-label(for='bathrooms') Nombre de SDB 
        input#bathrooms.form-input(type='text', name='bathrooms', placeholder='Saisissez un nombre de SDB') 
        br
 
-       label.form-label(for='max_guests') Nombre max. d'invités
+       label.form-label(for='max_guests') Nombre max. d'invités 
        input#max_guests.form-input(type='text', name='max_guests', placeholder='Saisissez un nombre de personnes max') 
        br
 
-       label.form-label(for='price_by_night') Tarif / nuit (€)
+       label.form-label(for='price_by_night') Tarif / nuit (€) 
        input#price_by_night.form-input(type='text', name='price_by_night', placeholder='Saisissez un tarif') 
        br
 
