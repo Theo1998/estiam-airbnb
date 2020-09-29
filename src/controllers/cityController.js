@@ -7,7 +7,7 @@ exports.index = async (req, res, next) => {
     })
       .sort({ createAt: -1 });
 
-    res.send(cities);
+    res.status(200).send(cities);
   } catch (error) {
     next(error);
   }
@@ -19,7 +19,7 @@ exports.show = async (req, res, next) => {
         _id: req.params.id,
       })
     );
-    res.send(city);
+    res.status(200).send(city);
   } catch (error) {
     next(error);
   }
@@ -30,7 +30,7 @@ exports.store = async (req, res, next) => {
     let city = new City();
     city.name = req.body.name;
     city = await city.save();
-    res.send(city);
+    res.status(200).send(city);
   } catch (error) {
     next(error);
   }

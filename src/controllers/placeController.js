@@ -6,11 +6,16 @@ const User = require('../models/user');
 // Afficher les informations d'un place
 exports.show = async (req, res, next) => {
   try {
-    const place = await Place.findOne({ _id: req.params.id });
+    const place = await Place.findOne({ _id: req.params.id },
+      (err) => {
+        if (err) {
+          const errToThrow = new Error('Not found');
+          errToThrow.statusCode = 404;
+          throw errToThrow;
+        }
+      });
     const user = await User.findOne({ _id: config.localStorage.getItem('user') });
-    console.log('ls userId: ', config.localStorage.getItem('user'));
-    console.log(user);
-    res.render('place', { place, user });
+    res.status(200).render('place', { place, user });
   } catch (error) {
     next(error);
   }
@@ -21,13 +26,22 @@ exports.delete = async (req, res, next) => {
     const place = await (
       await Place.deleteOne({
         _id: req.params.id,
+      }, (err) => {
+        if (err) {
+          const errToThrow = new Error('Not found');
+          errToThrow.statusCode = 404;
+          throw errToThrow;
+        }
       })
     );
     const user = await User.findOne({ _id: config.localStorage.getItem('user') });
-    if (user.role !== 'Hote' ) 
-      return res.status(403).send("Veuillez créer un compte hote")
-    else 
-      return res.status(200).send(place);
+    if (!user) {
+      return res.status(401).send('Not connected');
+    }
+    if (user.role !== 'Hote') {
+      return res.status(403).send('Veuillez créer un compte hote');
+    }
+    return res.status(204).send(place);
   } catch (error) {
     next(error);
   }
@@ -70,15 +84,25 @@ exports.update = async (req, res, next) => {
         bathrooms: req.body.bathrooms,
         max_guests: req.body.max_guests,
         price_by_night: req.body.price_by_night,
+      }, (err) => {
+        if (err) {
+          const errToThrow = new Error('An input field is missing');
+          errToThrow.statusCode = 400;
+          throw errToThrow;
+        }
       })
     );
-    if (!place)
-      return res.status(404).send("Aucune ressource trouvée")
+    if (!place) {
+      return res.status(404).send('Aucune ressource trouvée');
+    }
     const user = await User.findOne({ _id: config.localStorage.getItem('user') });
-    if (user.role !== 'Hote' ) 
-      return res.status(403).send("Veuillez créer un compte hote")
-    else 
-      return res.status(200).send(place);
+    if (!user) {
+      return res.status(401).send('Not connected');
+    }
+    if (user.role !== 'Hote') {
+      return res.status(403).send('Veuillez créer un compte hote');
+    }
+    return res.status(200).send(place);
   } catch (error) {
     next(error);
   }
@@ -96,16 +120,22 @@ exports.form = async (req, res, next) => {
   }
 };
 
-exports.store = async (req, res, next) => {
-  try {
-    let place = new Place();
-    place.name = req.body.name;
-    place = await place.save();
-    res.send(place);
-  } catch (error) {
-    next(error);
-  }
-};
+// exports.store = async (req, res, next) => {
+//   try {
+//     let place = new Place();
+//     place.name = req.body.name;
+//     place = await place.save((error) => {
+//       if (error) {
+//         const err = new Error('An input field is missing');
+//         err.statusCode = 400;
+//         throw err;
+//       }
+//     });
+//     res.send(place);
+//   } catch (error) {
+//     next(error);
+//   }
+// };
 
 // Ajouter un nouveau place
 exports.store = async (req, res, next) => {
@@ -114,8 +144,16 @@ exports.store = async (req, res, next) => {
       if (err) return console.error(err);
       let place = new Place(req.body);
       User.findById({ _id: req.params.user }, (e, user) => {
-        if (e) return console.error(e);
-        if (user.role === 'Hote') return console.error('Mauvais rôle');
+        if (e) {
+          const errToThrow = new Error('Not connected');
+          errToThrow.statusCode = 401;
+          throw errToThrow;
+        }
+        if (user.role === 'Hote') {
+          const errToThrow = new Error('Mauvais rôle');
+          errToThrow.statusCode = 403;
+          throw errToThrow;
+        }
         place = place.save(
           (error, newPlace) => {
             if (error) return console.error(error);
@@ -125,7 +163,7 @@ exports.store = async (req, res, next) => {
               (lastErr, pl) => {
                 user.save();
                 if (lastErr) return console.error(lastErr);
-                res.json(pl);
+                res.status(201).json(pl);
                 return true;
               },
             );

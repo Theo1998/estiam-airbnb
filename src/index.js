@@ -33,7 +33,7 @@ app.set('view engine', 'pug');
 app.set('views', './views');
 
 router.get('/', (req, res) => {
-  res.send('Welcome to our Airbnb API !');
+  res.status(200).send('Welcome to our Airbnb API !');
 });
 
 router.use('/city', cityRoutes);
@@ -41,7 +41,7 @@ router.use('/auth', authRoutes);
 router.use('/place', placeRoutes);
 
 router.use((req, res) => {
-  res.send('<h1> Page not found </h1>');
+  res.status(200).send('<h1> Page not found </h1>');
 });
 
 app.use('/api', router);

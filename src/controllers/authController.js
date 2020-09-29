@@ -25,7 +25,7 @@ exports.login = async (req, res, next) => {
     const token = jwt.encode({ id: user.id }, config.jwtSecret);
     config.localStorage.setItem('user', user.id);
     config.localStorage.setItem('token', token);
-    return res.send({ user, token });
+    return res.status(200).send({ user, token });
   } catch (err) {
     next(err);
     return true;
@@ -48,13 +48,13 @@ exports.signup = async (req, res, next) => {
     user.last_name = req.body.last_name;
     user.first_name = req.body.first_name;
     user.role = req.body.role;
-    user = await user.save((error, user) => {
+    user = await user.save((error) => {
       if (error) {
         const err = new Error('An input field is missing');
         err.statusCode = 400;
         throw err;
       }
-    },);
+    });
 
     const token = jwt.encode({ id: user.id }, config.jwtSecret);
     config.localStorage.setItem('user', user);
@@ -63,7 +63,7 @@ exports.signup = async (req, res, next) => {
       Location: 'login',
     });
     res.end();
-    return res.send({ user, token });
+    return res.status(201).send({ user, token });
   } catch (err) {
     next(err);
     return true;
@@ -77,7 +77,7 @@ exports.me = async (req, res, next) => {
     const user = await User.findById(req.user, {
       places: [],
     });
-    return res.send(user);
+    return res.status(200).send(user);
   } catch (err) {
     next(err);
     return true;
