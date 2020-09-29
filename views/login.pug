@@ -1,0 +1,20 @@
+extends layout
+block content
+  h2 Connexion
+    br
+    br
+    form.form-horizontal(action='/api/place/login', method='POST') 
+     .form-group
+
+       label.form-label(for='name') Email
+       input#name.form-input(type='text', name='name', placeholder='Saisissez votre email')
+       br
+
+       label.form-label(for='description') Password
+       input#description.form-input(type='text', name='description', placeholder='Saisissez une description') 
+       br
+
+    
+     button.btn.btn-success(type="submit") Connexion 
+     a.btn.btn-primary(href='/api/newuser' role='button') Inscription 
+     a.btn.btn-primary(href='/api/place' role='button') Retour

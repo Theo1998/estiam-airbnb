@@ -1,0 +1,33 @@
+extends layout
+block content
+  h2 Connexion
+    br
+    br
+    form.form-horizontal(action='/api/place/inscription', method='POST') 
+     .form-group
+
+       label.form-label(for='name') Nom
+       input#name.form-input(type='text', name='name', placeholder='nom')
+       br
+
+       label.form-label(for='description') Prenom
+       input#description.form-input(type='text', name='description', placeholder='Prenom') 
+       br
+       form
+         select(name='role', size='1')
+           option
+             | Hote
+           option
+             | Locataire
+
+       label.form-label(for='description') Email
+       input#description.form-input(type='text', name='description', placeholder='Email')
+       br
+
+       label.form-label(for='description') Password
+       input#description.form-input(type='text', name='description', placeholder='Password')
+       br
+
+     button.btn.btn-success(type="submit") Connexion 
+     a.btn.btn-primary(href='/api/newuser' role='button') Inscription 
+     a.btn.btn-primary(href='/api/place' role='button') Retour
