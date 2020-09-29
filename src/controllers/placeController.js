@@ -36,6 +36,20 @@ exports.all = async (req, res, next) => {
   }
 };
 
+// Pour afficher la vue de modification d'une location
+exports.updateView = async (req, res, next) => {
+  try {
+    const place = await Place.findById({
+      _id: req.params.id,
+    });
+    const citys = await City.find({});
+    res.render('modificate', { place, citys });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// Pour mettre à jour les champs d'une location
 exports.update = async (req, res, next) => {
   try {
     const place = await (
@@ -43,6 +57,11 @@ exports.update = async (req, res, next) => {
         _id: req.params.id,
       }, {
         name: req.body.name,
+        description: req.body.description,
+        rooms: req.body.rooms,
+        bathrooms: req.body.bathrooms,
+        max_guests: req.body.max_guests,
+        price_by_night: req.body.price_by_night,
       })
     );
     res.send(place);
@@ -56,7 +75,8 @@ exports.form = async (req, res, next) => {
   try {
     const places = await Place.find({
     });
-    res.render('addplace', { places });
+    const citys = await City.find({});
+    res.render('addplace', { places, citys });
   } catch (error) {
     next(error);
   }

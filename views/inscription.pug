@@ -6,11 +6,11 @@ block content
     form.form-horizontal(action='/api/auth/signup', method='POST') 
      .form-group
 
-       label.form-label(for='last_name') Nom
+       label.form-label(for='last_name') Nom 
        input#last_name.form-input(type='text', name='last_name', placeholder='nom')
        br
 
-       label.form-label(for='first_name') Prenom
+       label.form-label(for='first_name') Prenom 
        input#first_name.form-input(type='text', name='first_name', placeholder='Prenom') 
        br
        select(name='role', size='1')
@@ -19,11 +19,11 @@ block content
          option
            | Locataire
 
-       label.form-label(for='email') Email
+       label.form-label(for='email') Email 
        input#email.form-input(type='email', name='email', placeholder='Email')
        br
 
-       label.form-label(for='password') Password
+       label.form-label(for='password') Password 
        input#password.form-input(type='password', name='password', placeholder='Password')
        br
 
