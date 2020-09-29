@@ -3,18 +3,18 @@ block content
   h2 Connexion
     br
     br
-    form.form-horizontal(action='/api/place/login', method='POST') 
+    form.form-horizontal(action='/api/auth/login', method='POST') 
      .form-group
 
-       label.form-label(for='name') Email
-       input#name.form-input(type='text', name='name', placeholder='Saisissez votre email')
+       label.form-label(for='email') Email
+       input#email.form-input(type='email', name='email', placeholder='Saisissez votre email')
        br
 
-       label.form-label(for='description') Password
-       input#description.form-input(type='text', name='description', placeholder='Saisissez une description') 
+       label.form-label(for='password') Password
+       input#password.form-input(type='password', name='password', placeholder='Saisissez une description') 
        br
 
     
      button.btn.btn-success(type="submit") Connexion 
-     a.btn.btn-primary(href='/api/newuser' role='button') Inscription 
+     a.btn.btn-primary(href='/api/auth/signup' role='button') Inscription 
      a.btn.btn-primary(href='/api/place' role='button') Retour

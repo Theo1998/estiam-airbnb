@@ -1,33 +1,32 @@
 extends layout
 block content
-  h2 Connexion
+  h2 Inscription
     br
     br
-    form.form-horizontal(action='/api/place/inscription', method='POST') 
+    form.form-horizontal(action='/api/auth/signup', method='POST') 
      .form-group
 
-       label.form-label(for='name') Nom
-       input#name.form-input(type='text', name='name', placeholder='nom')
+       label.form-label(for='last_name') Nom
+       input#last_name.form-input(type='text', name='last_name', placeholder='nom')
        br
 
-       label.form-label(for='description') Prenom
-       input#description.form-input(type='text', name='description', placeholder='Prenom') 
+       label.form-label(for='first_name') Prenom
+       input#first_name.form-input(type='text', name='first_name', placeholder='Prenom') 
        br
-       form
-         select(name='role', size='1')
-           option
-             | Hote
-           option
-             | Locataire
+       select(name='role', size='1')
+         option
+           | Hote
+         option
+           | Locataire
 
-       label.form-label(for='description') Email
-       input#description.form-input(type='text', name='description', placeholder='Email')
-       br
-
-       label.form-label(for='description') Password
-       input#description.form-input(type='text', name='description', placeholder='Password')
+       label.form-label(for='email') Email
+       input#email.form-input(type='email', name='email', placeholder='Email')
        br
 
-     button.btn.btn-success(type="submit") Connexion 
-     a.btn.btn-primary(href='/api/newuser' role='button') Inscription 
+       label.form-label(for='password') Password
+       input#password.form-input(type='password', name='password', placeholder='Password')
+       br
+
+     button.btn.btn-success(type="submit") S'inscrire 
+     a.btn.btn-primary(href='/api/auth/login' role='button') Connexion 
      a.btn.btn-primary(href='/api/place' role='button') Retour

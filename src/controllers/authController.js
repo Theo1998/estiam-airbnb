@@ -5,6 +5,7 @@ const User = require('../models/user');
 
 exports.login = async (req, res, next) => {
   try {
+    console.log(req.body);
     const { email, password } = req.body;
 
     const user = await User.findOne({ email }).select('+password');
@@ -29,6 +30,9 @@ exports.login = async (req, res, next) => {
     return true;
   }
 };
+exports.loginView = async (req, res) => {
+  res.render('login');
+};
 exports.signup = async (req, res, next) => {
   try {
     const existingUser = await User.findOne({ email: req.body.email });
@@ -47,11 +51,18 @@ exports.signup = async (req, res, next) => {
 
     const token = jwt.encode({ id: user.id }, config.jwtSecret);
     config.localStorage.setItem('token', token);
+    res.writeHead(302, {
+      Location: 'login',
+    });
+    res.end();
     return res.send({ user, token });
   } catch (err) {
     next(err);
     return true;
   }
+};
+exports.signupView = async (req, res) => {
+  res.render('inscription');
 };
 exports.me = async (req, res, next) => {
   try {

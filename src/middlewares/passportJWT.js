@@ -3,7 +3,6 @@ const passportJWT = require('passport-jwt');
 const User = require('../models/user');
 const config = require('../../config');
 
-const { ExtractJwt } = passportJWT;
 const { Strategy } = passportJWT;
 
 const lsExtractor = function () {

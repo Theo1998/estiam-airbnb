@@ -81,6 +81,7 @@ exports.store = async (req, res, next) => {
       let place = new Place(req.body);
       User.findById({ _id: req.params.user }, (e, user) => {
         if (e) return console.error(e);
+        if (user.role === 'Hote') return console.error('Mauvais rôle');
         place = place.save(
           (error, newPlace) => {
             if (error) return console.error(error);
