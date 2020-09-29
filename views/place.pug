@@ -1,13 +1,32 @@
 extends layout
 block content
+	br
 	a.btn.btn-primary(href='/api/place' role='button') Retour
-	br
-	br
-	br
 	a.list-group-item.list-group-item-action.flex-column.align-items-start.active(href='#')
 		.d-flex.w-100.justify-content-between
-			h5.mb-1= place.name
-		p.mb-1= place.price_by_night
-		small= place.rooms
+			h3.h3-place= place.name
+			br
+		.groupe-image-place
+			img.img-place(src='https://placeimg.com/380/230/arch' alt='')
+		h3.h3-place= place.description
+		small.small-place
+			= place.rooms
+			|  pièces - 
+			= place.bathrooms
+			|  SDB - 
+			= place.max_guests
+			|  personnes max.
+		h3.price-place= place.price_by_night
+			|  € / nuit
 		br
-		small= place.max_guests
+		.place-descritpion
+		h4.h4-place Logement entier
+		p.p-place
+			| Vous aurez le logement rien que pour vous.
+		h4.h4-place Nettoyage renforcé
+		p.p-place
+			| Cet hôte s'est engagé à suivre un protocole de nettoyage rigoureux, élaboré en partenariat avec d'éminents experts de la santé et de l'accueil.
+		h4.h4-place Superhost
+		p.p-place
+			| Hôte expérimenté qui bénéficient de très bonnes évaluations. 
+
