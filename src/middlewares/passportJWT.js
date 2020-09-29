@@ -5,9 +5,15 @@ const config = require('../../config');
 
 const { ExtractJwt } = passportJWT;
 const { Strategy } = passportJWT;
+
+const lsExtractor = function () {
+  console.log(config.localStorage.getItem('token'));
+  return config.localStorage.getItem('token');
+};
+
 const params = {
   secretOrKey: config.jwtSecret,
-  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+  jwtFromRequest: lsExtractor,
 };
 
 module.exports = () => {
