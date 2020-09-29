@@ -21,9 +21,9 @@ block content
 		br
 
 		//Affichage des boutons si role hôte
-		//if user.role = host
-		a.btn.btn-update(href=`/api/place/update/${place.id}` role='button') Modifier
-		a.btn.btn-delete(href=`/api/place/delete/${place.id}` role='button') Supprimer
+		if user.role == 'Hote'
+			a.btn.btn-update(href=`/api/place/update/${place.id}` role='button') Modifier
+			a.btn.btn-delete(href=`/api/place/delete/${place.id}` role='button') Supprimer
 		
 		br
 		.place-descritpion

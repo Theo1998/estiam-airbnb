@@ -23,6 +23,7 @@ exports.login = async (req, res, next) => {
     }
 
     const token = jwt.encode({ id: user.id }, config.jwtSecret);
+    config.localStorage.setItem('user', user.id);
     config.localStorage.setItem('token', token);
     return res.send({ user, token });
   } catch (err) {
@@ -50,6 +51,7 @@ exports.signup = async (req, res, next) => {
     user = await user.save();
 
     const token = jwt.encode({ id: user.id }, config.jwtSecret);
+    config.localStorage.setItem('user', user);
     config.localStorage.setItem('token', token);
     res.writeHead(302, {
       Location: 'login',
