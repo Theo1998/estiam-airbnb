@@ -1,7 +1,7 @@
 extends layout
 block content
 	br
-	a.btn.btn-primary(href='/api/place' role='button') Retour
+	a.btn.btn-return(href='/api/place' role='button') Retour	
 	a.list-group-item.list-group-item-action.flex-column.align-items-start.active(href='#')
 		.d-flex.w-100.justify-content-between
 			h3.h3-place= place.name
@@ -19,6 +19,13 @@ block content
 		h3.price-place= place.price_by_night
 			|  € / nuit
 		br
+
+		//Affichage des boutons si role hôte
+		//if user.role = host
+		a.btn.btn-update(href=`/api/place/update/${place.id}` role='button') Modifier
+		a.btn.btn-delete(href=`/api/place/delete/${place.id}` role='button') Supprimer
+		
+		br
 		.place-descritpion
 		h4.h4-place Logement entier
 		p.p-place
@@ -29,4 +36,9 @@ block content
 		h4.h4-place Superhost
 		p.p-place
 			| Hôte expérimenté qui bénéficient de très bonnes évaluations. 
+		br
+
+	
+
+	
 
