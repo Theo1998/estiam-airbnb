@@ -23,7 +23,11 @@ exports.delete = async (req, res, next) => {
         _id: req.params.id,
       })
     );
-    res.send(place);
+    const user = await User.findOne({ _id: config.localStorage.getItem('user') });
+    if (user.role !== 'Hote' ) 
+      return res.status(403).send("Veuillez créer un compte hote")
+    else 
+      return res.status(200).send(place);
   } catch (error) {
     next(error);
   }
@@ -47,7 +51,7 @@ exports.updateView = async (req, res, next) => {
       _id: req.params.id,
     });
     const citys = await City.find({});
-    res.render('modificate', { place, citys });
+    res.status(201).render('modificate', { place, citys });
   } catch (error) {
     next(error);
   }
@@ -68,7 +72,13 @@ exports.update = async (req, res, next) => {
         price_by_night: req.body.price_by_night,
       })
     );
-    res.send(place);
+    if (!place)
+      return res.status(404).send("Aucune ressource trouvée")
+    const user = await User.findOne({ _id: config.localStorage.getItem('user') });
+    if (user.role !== 'Hote' ) 
+      return res.status(403).send("Veuillez créer un compte hote")
+    else 
+      return res.status(200).send(place);
   } catch (error) {
     next(error);
   }

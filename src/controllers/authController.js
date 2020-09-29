@@ -39,7 +39,7 @@ exports.signup = async (req, res, next) => {
     const existingUser = await User.findOne({ email: req.body.email });
     if (existingUser) {
       const error = new Error('Email already used');
-      error.statusCode = 403;
+      error.statusCode = 409;
       throw error;
     }
     let user = new User();
@@ -48,7 +48,13 @@ exports.signup = async (req, res, next) => {
     user.last_name = req.body.last_name;
     user.first_name = req.body.first_name;
     user.role = req.body.role;
-    user = await user.save();
+    user = await user.save((error, user) => {
+      if (error) {
+        const err = new Error('An input field is missing');
+        err.statusCode = 400;
+        throw err;
+      }
+    },);
 
     const token = jwt.encode({ id: user.id }, config.jwtSecret);
     config.localStorage.setItem('user', user);
