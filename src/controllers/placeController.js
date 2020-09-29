@@ -1,3 +1,4 @@
+const config = require('../../config');
 const City = require('../models/city');
 const Place = require('../models/place');
 const User = require('../models/user');
@@ -6,7 +7,10 @@ const User = require('../models/user');
 exports.show = async (req, res, next) => {
   try {
     const place = await Place.findOne({ _id: req.params.id });
-    res.render('place', { place });
+    const user = await User.findOne({ _id: config.localStorage.getItem('user') });
+    console.log('ls userId: ', config.localStorage.getItem('user'));
+    console.log(user);
+    res.render('place', { place, user });
   } catch (error) {
     next(error);
   }
